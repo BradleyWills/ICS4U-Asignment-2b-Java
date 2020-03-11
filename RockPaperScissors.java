@@ -65,7 +65,7 @@ public class RockPaperScissors {
           gameCount += 1;
           System.out.println("You lost. You chose " + userInput + " and the enemy chose "
               + randInput + ".");
-        } else if ((randInt == userInt - 1) || (randInt == userInt + 2)) {
+        } else {
           // You Win
           gameCount += 1;
           winCount += 1;
