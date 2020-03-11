@@ -1,5 +1,5 @@
-import java.util.Scanner;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
 * The RockPaperScissors program implements an application that allows you to
@@ -14,10 +14,16 @@ public class RockPaperScissors {
   // Create variables 
   static int randInt;
   static int userInt;
+  static int winCount;
+  static int gameCount;
   
+  /**
+   * Plays Rock Paper Scissors.
+   */
   public static void main(String[] args) {
     // Create some variables
     boolean finished = false;
+    boolean finished2 = false;
     String randInput = "";
     Random randomizer = new Random();
     Scanner inputAccepter = new Scanner(System.in);
@@ -40,7 +46,8 @@ public class RockPaperScissors {
       // Convert input to lowercase so that capital letters don't matter
       userInput = userInput.toLowerCase();
       // Check if input is valid
-      if ((userInput.equals("rock")) || (userInput.equals("paper")) || (userInput.equals("scissors"))) {
+      if ((userInput.equals("rock")) || (userInput.equals("paper")) 
+          || (userInput.equals("scissors"))) {
         // Declare the int value of the user choice
         if (userInput.equals("rock")) {
           userInt = 1;
@@ -51,30 +58,44 @@ public class RockPaperScissors {
         }
         if (userInt == randInt) {
           // You Tie
+          gameCount += 1;
           System.out.println("You tied. The enemy also chose " + randInput + ".");
         } else if ((randInt == userInt + 1) || (randInt == userInt - 2)) {
-          // You Win
-          System.out.println("You lost. You chose " + userInput + " and the enemy chose "
-          + randInput + ".");
-        } else if ((randInt == userInt - 1) || (randInt == userInt + 2)) {
           // You Lose
+          gameCount += 1;
+          System.out.println("You lost. You chose " + userInput + " and the enemy chose "
+              + randInput + ".");
+        } else if ((randInt == userInt - 1) || (randInt == userInt + 2)) {
+          // You Win
+          gameCount += 1;
+          winCount += 1;
           System.out.println("You won. You chose " + userInput + " and the enemy chose "
-          + randInput + ".");
+              + randInput + ".");
         }
       } else {
         System.out.println("Invalid Input.");
       }
       // Prompt the user
       System.out.println("Do you want to keep playing?");
-      System.out.println("Input yes or no.");
-      String yesOrNoInput = inputAccepter.nextLine();
-      // Convert input to lowercase so that capital letters don't matter
-      yesOrNoInput = yesOrNoInput.toLowerCase();
-      if (yesOrNoInput.equals("no")) {
-        finished = true;
-      } else if (!yesOrNoInput.equals("yes")) {
-        System.out.println("Invalid Input.");
-        finished = true;
+      finished2 = false;
+      while (finished2 == false) {
+        System.out.println("Input yes or no.");
+        String yesOrNoInput = inputAccepter.nextLine();
+        // Convert input to lowercase so that capital letters don't matter
+        yesOrNoInput = yesOrNoInput.toLowerCase();
+        if (yesOrNoInput.equals("no")) {
+          finished = true;
+          finished2 = true;
+          if (!(gameCount == 0)) {
+            double winPercentage = Double.valueOf(winCount) / Double.valueOf(gameCount) * 100;
+            System.out.println("Your win percentage was " 
+                + winPercentage + "%.");
+          }
+        } else if (!yesOrNoInput.equals("yes")) {
+          System.out.println("Invalid Input.");
+        } else {
+          finished2 = true;
+        }
       }
     }
   }
